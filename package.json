@@ -1,0 +1,12 @@
+{
+  "name": "assert-extensions",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/main.js",
+  "scripts": {
+    "test": "node --test test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
