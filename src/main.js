@@ -41,26 +41,54 @@ function toHaveLength(actual, expected, message) {
   }
 }
 
+function toBeCloseTo(actual, expected, numDigits, message) {
+  argCheck(arguments);
+
+  let precision = numDigits ?? 2;
+
+  let expectedDiff = Math.pow(10, -precision);
+  let receivedDiff = Math.abs(expected - actual);
+  let pass = receivedDiff < expectedDiff;
+
+  if (!pass) {
+    innerFail({
+      actual: actual, expected, message, operator: "toBeCloseTo", stacksStartFn: toBeCloseTo
+    });
+  }
+}
+
 function toBeFalsy(actual, message) {
   //argCheck(arguments);
 
-  if (typeof actual === "boolean" && actual != false) {
-    innerFail({
-      actual,
-      expected: 'falsy',
-      message,
-      operator: "toBeFalsy",
-      stacksStartFn: toBeFalsy
-    });
-  } else if (typeof actual === "number" && actual != 0) {
-    innerFail({
-      actual, expected: 'falsy', message, operator: "toBeFalsy", stacksStartFn: toBeFalsy
-    });
-  } else if (typeof actual === "string" && actual.length != 0) {
-    innerFail({
-      actual, expected: 'falsy', message, operator: "toBeFalsy", stacksStartFn: toBeFalsy
-    });
-  } else if (actual !== undefined && actual !== null && !isNaN(actual)) {
+  if (typeof actual === "boolean") {
+    if (actual === false) {
+      return;
+    } else {
+      innerFail({actual, expected: "falsy", message, operator: "toBeFalsy", stacksStartFn: toBeFalsy});
+    }
+  } else if (typeof actual === "number") {
+    if (actual === 0) {
+      return;
+    } else if (isNaN(actual)) {
+      return;
+    } else {
+      innerFail({
+        actual, expected: 'falsy', message, operator: "toBeFalsy", stacksStartFn: toBeFalsy
+      });
+    }
+  } else if (typeof actual === "string") {
+    if (actual.length === 0) {
+      return;
+    } else {
+      innerFail({
+        actual, expected: 'falsy', message, operator: "toBeFalsy", stacksStartFn: toBeFalsy
+      });
+    }
+  } else if (actual === undefined) {
+    return;
+  } else if (actual === null) {
+    return;
+  } else {
     innerFail({
       actual, expected: 'falsy', message, operator: "toBeFalsy", stacksStartFn: toBeFalsy
     });
@@ -69,7 +97,8 @@ function toBeFalsy(actual, message) {
 
 const assertExtensions = {
   "toHaveLength": toHaveLength,
-  "toBeFalsy": toBeFalsy
+  "toBeFalsy": toBeFalsy,
+  "toBeCloseTo": toBeCloseTo,
 };
 
 for (const key in assertExtensions) {

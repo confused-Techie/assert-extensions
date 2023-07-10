@@ -24,7 +24,7 @@ describe("toHaveLength", () => {
 });
 
 describe("toBeFalsy", () => {
-  describe("it passes properly", () => {
+  describe("passes properly", () => {
     it("if boolean false", () => {
       assert.toBeFalsy(false);
     });
@@ -41,7 +41,25 @@ describe("toBeFalsy", () => {
       assert.toBeFalsy(null);
     });
     it("if NaN", () => {
-      assert.toBeFalsy(NaN);
+      assert.toBeFalsy(Number(undefined));
+    });
+  });
+});
+
+describe("toBeCloseTo", () => {
+  describe("passes properly", () => {
+    it("passes with default numDigits", () => {
+      assert.toBeCloseTo(0, 0.001);
+    });
+    it("passes with provided numDigits", () => {
+      assert.toBeCloseTo(0.20001, 0.2, 5);
+    });
+  });
+  describe("fails properly", () => {
+    it("fails", () => {
+      assert.throws(() => {
+        assert.toBeCloseTo(4.2, 5);
+      });
     });
   });
 });
