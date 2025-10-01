@@ -1,7 +1,5 @@
 const assert = require("node:assert");
 
-// Since each check is part of the assert library, we will just need to extend this, to add in our own features.
-
 function innerFail(obj) {
   if (obj.message instanceof Error) throw obj.message;
 
@@ -27,7 +25,7 @@ function argCheck() {
   }
 }
 
-function toHaveLength(actual, expected, message) {
+assert.toHaveLength = (actual, expected, message) => {
   argCheck(arguments);
 
   if (actual.length !== expected) {
@@ -39,9 +37,9 @@ function toHaveLength(actual, expected, message) {
       stacksStartFn: toHaveLength
     });
   }
-}
+};
 
-function toBeCloseTo(actual, expected, numDigits, message) {
+assert.toBeCloseTo = (actual, expected, numDigits, message) => {
   argCheck(arguments);
 
   let precision = numDigits ?? 2;
@@ -55,11 +53,9 @@ function toBeCloseTo(actual, expected, numDigits, message) {
       actual: actual, expected, message, operator: "toBeCloseTo", stacksStartFn: toBeCloseTo
     });
   }
-}
+};
 
-function toBeFalsy(actual, message) {
-  //argCheck(arguments);
-
+assert.toBeFalsy = (actual, message) => {
   if (typeof actual === "boolean") {
     if (actual === false) {
       return;
@@ -93,18 +89,6 @@ function toBeFalsy(actual, message) {
       actual, expected: 'falsy', message, operator: "toBeFalsy", stacksStartFn: toBeFalsy
     });
   }
-}
-
-const assertExtensions = {
-  "toHaveLength": toHaveLength,
-  "toBeFalsy": toBeFalsy,
-  "toBeCloseTo": toBeCloseTo,
 };
-
-for (const key in assertExtensions) {
-  if (!assert[key]) {
-    assert[key] = assertExtensions[key];
-  }
-}
 
 module.exports = assert;

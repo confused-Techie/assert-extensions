@@ -1,5 +1,5 @@
 const { describe, it } = require("node:test");
-const assert = require("../src/main.js");
+const assert = require("./index.js");
 
 describe("toHaveLength", () => {
   it("passes properly", () => {

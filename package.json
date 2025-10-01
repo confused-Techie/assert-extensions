@@ -1,12 +1,12 @@
 {
   "name": "assert-extensions",
-  "version": "1.0.0",
-  "description": "",
-  "main": "src/main.js",
+  "version": "1.0.1",
+  "description": "Simple extensions to the Built-In NodeJS Assert module.",
+  "main": "index.js",
   "scripts": {
-    "test": "node --test test"
+    "test": "node --test test.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "author": "confused-Techie",
+  "license": "MIT"
 }
