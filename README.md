@@ -4,6 +4,13 @@ Simple extensions to use within the Built-In NodeJS Assert module.
 
 Allowing for expect statements to be written much more similarly to those that exist in Jest.
 
+## `assert.toBeString(actual[, message])`
+
+* `actual`: `<any>`
+* `message`: `<string>` | `<Error>`
+
+Expects the actual to be a typeof string.
+
 ## `assert.toHaveLength(actual, expected[, message])`
 
 * `actual`: `<array>`

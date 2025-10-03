@@ -25,6 +25,17 @@ function argCheck() {
   }
 }
 
+// Type Checks
+assert.toBeString = (actual, message) => {
+  if (typeof actual === "string") {
+    return;
+  } else {
+    innerFail({
+      actual: actual, expected: "string", message, operator: "toBeString", stacksStartFn: toBeString
+    });
+  }
+};
+
 assert.toHaveLength = (actual, expected, message) => {
   argCheck(arguments);
 
